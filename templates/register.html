@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <script src="/static/js/jquery-3.3.1.js"></script>
+    <style>
+        #myimg {
+            margin-left: 10px;
+        }
+
+        #myfile {
+            display: none;
+        }
+        .error{
+            color:red;
+        }
+
+    </style>
+    <title>注册页面</title>
+</head>
+<body>
+<form action="" id="form">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h1>注册页面</h1>
+                {% csrf_token %}
+                {% for foo in form_obj %}
+                    <div class="form-group">
+                        <label for="{{ foo.auto_id }}">{{ foo.label }}</label>
+                        {{ foo }} <span class="error pull-right"></span>
+                    </div>
+                {% endfor %}
+                <div class="form-group">
+                    <label for="myfile">头像
+                        <img src="/static/img/default.png" alt="" height="200" width="200" id="myimg">
+                    </label>
+
+                    <input type="file" id="myfile">
+
+                </div>
+                <div>
+                    <input id='sub_btn' type="button" class="btn btn-danger" value="注册">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+
+<script>
+    $("#myfile").change(function () {
+        //取到当前文件
+        //var obj=$(this)
+        var obj = $(this)[0].files[0]
+        //生成一个filereader对象
+        var read = new FileReader()
+        //会把文件路径读到read对象里面
+        read.readAsDataURL(obj)
+        //等待read读完文件，才能继续操作
+        read.onload = function () {
+            //alert(read.result)
+            //read.result 就是文件内容
+            $("#myimg").attr('src', read.result)
+            //$("#myimg").attr('aa', 'bb')
+        }
+    })
+    $("#sub_btn").click(function () {
+        //alert(11)
+        var formdata=new FormData()
+        //传统方式
+        //formdata.append('name',$("#id_name"))
+        var tt=$("#form").serializeArray()
+        //console.log(tt)
+        $.each(tt,function (index,value) {
+            //console.log(index)
+            //console.log(value)
+            formdata.append(value.name,value.value)
+        })
+        formdata.append('myfile',$("#myfile")[0].files[0])
+        //console.log(tt)
+        $.ajax({
+            url:'',
+            type:'post',
+            processData:false,
+            contentType:false,
+            data:formdata,
+            success:function (data) {
+                //console.log(data)
+                if(data.user){
+                    location.href='/login/'
+                } else{
+                    $(".form-group").removeClass('has-error')
+                    $("span.error").text("")
+                    $.each(data.msg,function (index,value) {
+                        {#console.log(index)#}
+                        {#console.log(value)#}
+                        {#console.log("#id_"+index)#}
+
+                        if(index=='__all__'){
+                            $("#id_re_pwd").next().text(value[0]).parent().addClass('has-error')
+                            //$("#id_re_pwd").parent().addClass('has-error')
+                        }
+                        $("#id_"+index).next().text(value[0]).parent().addClass('has-error')
+                       // $("#id_"+index).parent().addClass('has-error')
+                    })
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>

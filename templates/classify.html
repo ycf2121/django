@@ -1,0 +1,34 @@
+{#{% extends 'base.html' %}#}
+{#{% block content %}#}
+    <div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">我的标签</div>
+            <div class="panel-body">
+                {% for foo in tag_count %}
+                    <p><a href="/{{ username }}/tag/{{ foo.0 }}">{{ foo.0 }}({{ foo.1 }})</a></p>
+
+                {% endfor %}
+
+            </div>
+        </div>
+        <div class="panel panel-danger">
+            <div class="panel-heading">我的分类</div>
+            <div class="panel-body">
+                {% for foo in category_count %}
+                    <p><a href="/{{ username }}/category/{{ foo.0 }}">{{ foo.0 }}({{ foo.1 }})</a></p>
+
+                {% endfor %}
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">随笔档案</div>
+            <div class="panel-body">
+                {% for foo in month_list %}
+                    <p><a href="/{{ username }}/archive/{{ foo.0|date:"Y-m" }}">{{ foo.0|date:"Y-m" }}({{ foo.1 }})</a></p>
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{#{% endblock %}#}

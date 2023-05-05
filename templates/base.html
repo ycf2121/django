@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <script src="/static/js/jquery-3.3.1.js"></script>
+    <script src="/static/bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <title>个人站点</title>
+    <style>
+        .head {
+            width: 100%;
+            height: 60px;
+            background-color: #369;
+        }
+    </style>
+</head>
+<body>
+<div class="head">
+
+<div>
+        <span style="font-size: 18px;color: white;margin-left: 10px">{{ blog.title }}</span>
+        <span> <a href="" style="float: right;font-size: 14px;color: white;margin-top: 10px">后台管理</a></span>
+
+    </div>
+</div>
+<div class="container-fluid" style="margin-top: 10px">
+    <div class="row">
+        <div class="col-md-3">
+            {% load mytags %}
+{#            {{参数|函数名："参数" }}#}
+{#            {% 函数名 参数 参数 参数 %}#}
+            {% classify username %}
+
+        </div>
+        <div class="col-md-9">
+            {% block content %}
+
+            {% endblock %}
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

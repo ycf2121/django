@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+ {% for article in article_list %}
+                <div class="clearfix">
+                    <div class="article_head"><a href="/{{ username }}/articles/{{ article.pk }}"><h5>{{ article.title }}</h5></a></div>
+                    <div>
+                        {{ article.desc }}
+                    </div>
+
+                    <div class="small" style="margin-top: 10px;float: right;color:gray">
+                        <span>发布于 {{ article.create_date|date:"Y-m-d" }}</span>&nbsp&nbsp
+                        <span class="glyphicon glyphicon-comment">评论({{ article.comment_num }})</span>&nbsp&nbsp
+                        <span class="glyphicon glyphicon-thumbs-up">点赞({{ article.up_num }})</span>
+                    </div>
+                </div>
+                <hr>
+
+            {% endfor %}
+
+{% endblock %}

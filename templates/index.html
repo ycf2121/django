@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <script src="/static/js/jquery-3.3.1.js"></script>
+    <script src="/static/bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <title>首页</title>
+</head>
+<body>
+{#头部信息#}
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">博客园</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">首页 <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">文章</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.user.is_authenticated %}
+                    <li><a href="#" class="glyphicon glyphicon-user">&nbsp;{{ request.user.username }}</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">更多操作 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">修改密码</a></li>
+                            <li><a href="#">后台管理</a></li>
+                            <li><a href="#">退出登录</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li><a href="/login/">登录</a></li>
+                    <li><a href="/register/">注册</a></li>
+                {% endif %}
+            </ul>
+
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+{#内容区域#}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">重金求子</div>
+                    <div class="panel-body">电话：18888888 微信：18888888</div>
+                </div>
+                <div class="panel panel-danger">
+                    <div class="panel-heading">同志交友</div>
+                    <div class="panel-body">草榴社区</div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">同志交友</div>
+                    <div class="panel-body">广告</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            {% for article in article_list %}
+                <div class="article_head"><a href=""><h5>{{ article.title }}</h5></a></div>
+                <div>
+                    <span class="media-left"><img height="40" width="40" src="/media/{{ article.user.avatar }}" alt=""></span>
+                    <span class="media-right">{{ article.desc }}</span>
+                </div>
+                <div class="small" style="margin-top: 10px">
+                <span><a href="">{{ article.user.username }}</a></span>&nbsp;&nbsp;&nbsp;
+                <span>发布于 {{ article.create_date|date:"Y-m-d" }}</span>&nbsp;&nbsp;&nbsp;
+                <span class="glyphicon glyphicon-comment">评论（{{ article.comment_num }}）</span>&nbsp;&nbsp;&nbsp;
+                <span class="glyphicon glyphicon-thumbs-up">点赞（{{ article.up_num }}）</span>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+        <div class="col-md-3">
+            <div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">右侧广告</div>
+                    <div class="panel-body">点赞</div>
+                </div>
+                <div class="panel panel-danger">
+                    <div class="panel-heading">右侧广告</div>
+                    <div class="panel-body">广告一</div>
+                </div>
+                <div class="panel panel-success">
+                    <div class="panel-heading">右侧</div>
+                    <div class="panel-body">评论</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
